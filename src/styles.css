@@ -145,6 +145,27 @@ h1 {
   flex-direction: column;
   gap: 8px;
   height: 6.75rem;
+  position: relative;
+}
+
+.guess-input-wrapper::before {
+  content: none;
+  position: absolute;
+  bottom: calc(-0.75rem - (2 * 0.5rem) - 0.75rem);
+  right: -1rem;
+  padding: 0.5rem;
+  font-size: 0.75rem;
+  background-color: var(--color-gray-900);
+  border: 1px solid var(--color-error);
+}
+
+.guess-input-wrapper.invalid::before {
+  content: "Guess must be exactly 5 letters long.";
+}
+
+.guess-input-wrapper.invalid input {
+  border-color: var(--color-error);
+  animation: shake 250ms ease-in-out;
 }
 
 .guess-input-wrapper label {
@@ -228,5 +249,23 @@ h1 {
   }
   to {
     transform: translateY(0%);
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-8px);
+  }
+  50% {
+    transform: translateX(8px);
+  }
+  75% {
+    transform: translateX(-8px);
+  }
+  100% {
+    transform: translateX(0);
   }
 }
