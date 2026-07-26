@@ -1,13 +1,16 @@
 import React from "react";
+import Guess from "../Guess";
+
+import { range, createWordObj } from "../../utils";
+import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 
 function UserGuesses({ words }) {
   return (
     <ul className="guess-results">
-      {words.map((wordObj) => (
-        <li className="guess" key={wordObj.id}>
-          {wordObj.value}
-        </li>
-      ))}
+      {range(NUM_OF_GUESSES_ALLOWED).map((num) => {
+        const wordObj = words[num] || createWordObj("");
+        return <Guess key={`${num}-${wordObj.id}`} value={wordObj.value} />;
+      })}
     </ul>
   );
 }
