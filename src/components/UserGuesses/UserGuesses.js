@@ -8,8 +8,14 @@ function UserGuesses({ words }) {
   return (
     <ul className="guess-results">
       {range(NUM_OF_GUESSES_ALLOWED).map((num) => {
-        const wordObj = words[num] || createWordObj("");
-        return <Guess key={`${num}-${wordObj.id}`} value={wordObj.value} />;
+        const wordObj = words[num] || createWordObj();
+        return (
+          <Guess
+            key={`${num}-${wordObj.id}`}
+            value={wordObj.value}
+            resultLetterStatus={wordObj.resultLetterStatus}
+          />
+        );
       })}
     </ul>
   );

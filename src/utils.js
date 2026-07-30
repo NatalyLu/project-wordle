@@ -1,3 +1,5 @@
+import { checkGuess } from "./game-helpers";
+
 export const sample = (arr) => {
   return arr[Math.floor(Math.random() * arr.length)];
 };
@@ -14,4 +16,8 @@ export const range = (start, end, step = 1) => {
   return output;
 };
 
-export const createWordObj = (value) => ({ id: Date.now(), value });
+export const createWordObj = (value = "", answer = "") => ({
+  id: Date.now(),
+  value,
+  resultLetterStatus: value ? checkGuess(value, answer) : undefined,
+});

@@ -18,7 +18,7 @@ function Game() {
   const handleSubmitGuess = (guess) => {
     if (guesses.length >= NUM_OF_GUESSES_ALLOWED) return;
 
-    setGuesses([...guesses, createWordObj(guess)]); // setGuesses((prev) => [...prev, { id: Date.now(), value: guess }]);
+    setGuesses([...guesses, createWordObj(guess, answer)]); // setGuesses((prev) => [...prev, { id: Date.now(), value: guess }]);
   };
 
   return (
