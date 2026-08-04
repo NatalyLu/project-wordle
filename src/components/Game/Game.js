@@ -2,6 +2,7 @@ import React from "react";
 
 import GuessInput from "../GuessInput";
 import UserGuesses from "../UserGuesses";
+import FinalBanner from "../FinalBanner";
 
 import { sample, createWordObj } from "../../utils";
 import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
@@ -14,17 +15,33 @@ console.info({ answer });
 
 function Game() {
   const [guesses, setGuesses] = React.useState([]);
+  const [isRightGuess, setIsRightGuess] = React.useState(false);
+
+  const isGameOver = guesses.length >= NUM_OF_GUESSES_ALLOWED || isRightGuess;
 
   const handleSubmitGuess = (guess) => {
-    if (guesses.length >= NUM_OF_GUESSES_ALLOWED) return;
+    if (isGameOver) return;
 
-    setGuesses([...guesses, createWordObj(guess, answer)]); // setGuesses((prev) => [...prev, { id: Date.now(), value: guess }]);
+    const guessObj = createWordObj(guess, answer);
+
+    setIsRightGuess(guess === answer);
+    setGuesses([...guesses, guessObj]); // setGuesses((prev) => [...prev, { id: Date.now(), value: guess }]);
   };
 
   return (
     <div>
       <UserGuesses words={guesses} />
-      <GuessInput handleSubmitGuess={handleSubmitGuess} />
+      <GuessInput
+        handleSubmitGuess={handleSubmitGuess}
+        isGameOver={isGameOver}
+      />
+      {isGameOver && (
+        <FinalBanner
+          isRightGuess={isRightGuess}
+          answer={answer}
+          count={guesses.length}
+        />
+      )}
     </div>
   );
 }
