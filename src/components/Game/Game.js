@@ -8,16 +8,20 @@ import { sample, createWordObj } from "../../utils";
 import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 import { WORDS } from "../../data";
 
-// Pick a random word on every pageload.
-const answer = sample(WORDS);
-// To make debugging easier, we'll log the solution in the console.
-console.info({ answer });
-
 function Game() {
+  const [answer, setAnswer] = React.useState(sample(WORDS));
+  console.info({ answer });
   const [guesses, setGuesses] = React.useState([]);
   const [isRightGuess, setIsRightGuess] = React.useState(false);
 
   const isGameOver = guesses.length >= NUM_OF_GUESSES_ALLOWED || isRightGuess;
+
+  const handleRestart = () => {
+    const newAnswer = sample(WORDS);
+    setAnswer(newAnswer);
+    setGuesses([]);
+    setIsRightGuess(false);
+  };
 
   const handleSubmitGuess = (guess) => {
     if (isGameOver) return;
@@ -40,6 +44,7 @@ function Game() {
           isRightGuess={isRightGuess}
           answer={answer}
           count={guesses.length}
+          handleRestart={handleRestart}
         />
       )}
     </div>
